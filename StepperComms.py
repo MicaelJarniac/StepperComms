@@ -13,7 +13,7 @@ RW_MASK             = 0x40
 READ                = 1
 WRITE               = 0
 
-CMD_BUFFER_SIZE     = 68
+CMD_BUFFER_SIZE     = 61 + 2
 
 OutCmdBuffer        = [None] * CMD_BUFFER_SIZE
 OutCmdBufferId      = 0
@@ -26,14 +26,17 @@ BAUD                = 9600
 TOUT                = 1
 
 ser = serial.Serial(PORT, BAUD, timeout = TOUT)
+
 while True:
     ser.reset_input_buffer()
     ser.reset_output_buffer()
+
     for i in range(CMD_BUFFER_SIZE):
-        data = 0
+        data    = 0
         CmdType = WRITE
         CmdSize = 1
-        CmdAddr = 0x2dc
+        CmdAddr = 31
+
         if i == 0:
             data |= RW_CMD & BYTE_MASK
             data |= RW_MASK & (BYTE_MASK * CmdType)
@@ -42,6 +45,10 @@ while True:
             data |= CmdAddr & BYTE_MASK
         elif i == 2:
             data |= 0x1 & BYTE_MASK
+
         OutCmdBuffer[i] = data
+
     for i in range(CmdSize + 2):
-        ser.write(OutCmdBuffer[i]);
+        ser.write(OutCmdBuffer[i] & BYTE_MASK)
+        debug("{1:02d} - {0:08b}".format(OutCmdBuffer[i], i))
+    debug("\n")

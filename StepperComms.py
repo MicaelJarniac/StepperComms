@@ -60,14 +60,14 @@ while True:
             data |= CmdAddr & BYTE_MASK # Address byte
         # Builds third byte
         elif i == 2:
-            data |= 0x1 & BYTE_MASK # Placeholder
+            data |= 0x57 & BYTE_MASK # Placeholder
 
         # Assigns built byte to its position on the message buffer
         OutCmdBuffer[i] = data
 
     # Iterates through 2 info bytes + command bytes
     for i in range(2 + CmdSize):
-        ser.write(OutCmdBuffer[i] & BYTE_MASK)                  # Writes current message buffer position to the serial device
+        ser.write(serial.to_bytes([OutCmdBuffer[i] & BYTE_MASK]))                  # Writes current message buffer position to the serial device
         debug("{1:02d} - {0:08b}".format(OutCmdBuffer[i], i))
 
     debug("\n")

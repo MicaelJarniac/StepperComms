@@ -2,6 +2,7 @@
 import os
 import sys
 import serial
+import time
 sys.path.append(os.path.dirname(os.path.expanduser('~/projects/Python-Playground/Debug')))  # Update path accordingly
 from Debug.Debug import Debug
 
@@ -33,9 +34,21 @@ CmdAddr             = 0 # Command address
 PORT                = "/dev/serial0"    # Device
 BAUD                = 9600              # Baud rate
 TOUT                = 1                 # Timeout
+Delay               = 0.05              # Delay between quick writes
 
 # Declare serial
-ser = serial.Serial(PORT, BAUD, timeout = TOUT)
+ser = serial.Serial(
+        port                = PORT,
+        baudrate            = BAUD,
+        bytesize            = serial.EIGHTBITS,
+        parity              = serial.PARITY_NONE,
+        stopbits            = serial.STOPBITS_TWO,
+        timeout             = TOUT,
+        xonxoff             = False,
+        rtscts              = False,
+        dsrdtr              = False,
+        write_timeout       = TOUT,
+        inter_byte_timeout  = None)
 
 # Main loop
 while True:
@@ -60,7 +73,7 @@ while True:
             data |= CmdAddr & BYTE_MASK # Address byte
         # Builds third byte
         elif i == 2:
-            data |= 0x57 & BYTE_MASK # Placeholder
+            data |= 0x1 & BYTE_MASK # Placeholder
 
         # Assigns built byte to its position on the message buffer
         OutCmdBuffer[i] = data
@@ -69,5 +82,6 @@ while True:
     for i in range(2 + CmdSize):
         ser.write(serial.to_bytes([OutCmdBuffer[i] & BYTE_MASK]))                  # Writes current message buffer position to the serial device
         debug("{1:02d} - {0:08b}".format(OutCmdBuffer[i], i))
+        time.sleep(Delay)
 
     debug("\n")

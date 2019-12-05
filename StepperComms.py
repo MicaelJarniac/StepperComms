@@ -19,16 +19,17 @@ READ                = 1     # Command of type 'read'
 WRITE               = 0     #                 'write'
 
 # Message size
-CMD_BUFFER_SIZE     = 1 + 1 + 61    # 1 byte (basic info & transfer size) + 1 byte (address) + 61 bytes (data)
+CMD_INFO_SIZE       = 1 + 1                 # 1 byte (basic info & transfer size) + 1 byte (address)
+CMD_BUFFER_SIZE     = CMD_INFO_SIZE + 61    # Command info + 61 bytes (data)
 
 # Message buffer and related
 OutCmdBuffer        = [None] * CMD_BUFFER_SIZE  # Initializes the buffer with given size
 OutCmdBufferId      = 0                         # Holds the current buffer position
 
 # Message parameters
-CmdType             = 0 # Command type ('read' or 'write')
-CmdSize             = 0 # Command size
-CmdAddr             = 0 # Command address
+CmdType             = WRITE # Command type ('read' or 'write')
+CmdSize             = 0     # Command size
+CmdAddr             = 0     # Command address
 
 # Serial configuration parameters
 PORT                = "/dev/serial0"    # Device
@@ -50,18 +51,10 @@ ser = serial.Serial(
         write_timeout       = TOUT,
         inter_byte_timeout  = None)
 
-# Main loop
-while True:
-    # Clear serial in and out buffers
-    ser.reset_input_buffer()
-    ser.reset_output_buffer()
-
+def BuildMessage():
     # Iterates through entire message buffer
     for i in range(CMD_BUFFER_SIZE):
         data    = 0
-        CmdType = WRITE
-        CmdSize = 1
-        CmdAddr = 31
 
         # Builds first byte
         if i == 0:
@@ -76,12 +69,27 @@ while True:
             data |= 0x1 & BYTE_MASK # Placeholder
 
         # Assigns built byte to its position on the message buffer
-        OutCmdBuffer[i] = data
+        OutCmdBuffer[i] = data & BYTE_MASK
 
+def SendMessage():
     # Iterates through 2 info bytes + command bytes
-    for i in range(2 + CmdSize):
+    for i in range(CMD_INFO_SIZE + CmdSize):
         ser.write(serial.to_bytes([OutCmdBuffer[i] & BYTE_MASK]))                  # Writes current message buffer position to the serial device
         debug("{1:02d} - {0:08b}".format(OutCmdBuffer[i], i))
         time.sleep(Delay)
+
+# Main loop
+while True:
+    # Clear serial in and out buffers
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
+
+    # Placecholders
+    CmdType = WRITE
+    CmdSize = 1
+    CmdAddr = 31
+
+    BuildMessage()
+    SendMessage()
 
     debug("\n")

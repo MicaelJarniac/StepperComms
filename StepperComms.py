@@ -73,7 +73,7 @@ def BuildMessage():
         elif i == 1:
             data |= CmdAddr & BYTE_MASK # Address byte
         # Builds remaining bytes
-        else
+        else:
             data |= CmdData[i - CMD_INFO_SIZE] & BYTE_MASK
 
         # Assigns built byte to its position on the message buffer

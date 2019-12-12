@@ -21,43 +21,44 @@ WRITE               = 0     #                 'write'
 ID_AMOUNT           = 38    # Amount of remote variables
 
 # Message size
-CMD_INFO_SIZE       = 1 + 1                         # 1 byte (basic info & transfer size) + 1 byte (address)
+CMD_ADDR_SIZE       = 1
+CMD_INFO_SIZE       = 1 + CMD_ADDR_SIZE             # 1 byte (basic info & transfer size) + 1 byte (address)
 CMD_DATA_SIZE       = 61                            # 61 bytes (data)
-CMD_BUFFER_SIZE     = CMD_INFO_SIZE + CMD_DATA_SIZE # Command info + command data
+CMD_BUFF_SIZE       = CMD_INFO_SIZE + CMD_DATA_SIZE # Command info + command data
 
 # Message buffer and related
-OutCmdBuffer        = [None] * CMD_BUFFER_SIZE  # Initializes the buffer with given size
+OutCmdBuffer        = [None] * CMD_BUFF_SIZE    # Initializes the buffer with given size
 # TODO Remove not used var
 OutCmdBufferId      = 0                         # Holds the current buffer position
 
 # Message parameters
 CmdType             = WRITE                     # Command type ('read' or 'write')
-CmdSize             = 0                         # Command size
-CmdAddr             = 0                         # Command address
-CmdData             = [None] * CMD_DATA_SIZE    # Command data
+CmdSize             = 0                         #         size
+CmdAddr             = 0                         #         address
+CmdData             = [None] * CMD_DATA_SIZE    #         data
 
 # Serial configuration parameters
-PORT                = "/dev/serial0"    # Device
-BAUD                = 9600              # Baud rate
-TOUT                = 1                 # Timeout
-Delay               = 0.05              # Delay between quick writes
+SerPort             = "/dev/serial0"    # Device
+SerBaud             = 9600              # Baud rate
+SerTout             = 1                 # Timeout
+SerDelay            = 0.05              # Delay between quick writes
 
 # Declare serial
 ser = serial.Serial(
-        port                = PORT,
-        baudrate            = BAUD,
-        bytesize            = serial.EIGHTBITS,
-        parity              = serial.PARITY_NONE,
-        stopbits            = serial.STOPBITS_TWO,
-        timeout             = TOUT,
-        xonxoff             = False,
-        rtscts              = False,
-        dsrdtr              = False,
-        write_timeout       = TOUT,
-        inter_byte_timeout  = None)
+        port                = SerPort,              # Serial port       configurable above
+        baudrate            = SerBaud,              # Baudrate          configurable above
+        bytesize            = serial.EIGHTBITS,     # Byte size     hardcoded 8 bits
+        parity              = serial.PARITY_NONE,   # Parity        hardcoded no parity
+        stopbits            = serial.STOPBITS_TWO,  # Stop bits     hardcoded 2 stopbits
+        timeout             = SerTout,              # Timeout           configurable above
+        xonxoff             = False,                # ?             hardcoded false
+        rtscts              = False,                # ?             hardcoded false
+        dsrdtr              = False,                # ?             hardcoded false
+        write_timeout       = SerTout,              # Write timeout     configurable above
+        inter_byte_timeout  = None)                 # ?             hardcoded none
 
 # Remote variables
-RemoteVars = [None] * ID_AMOUNT
+RemoteVars = [None] * ID_AMOUNT     # Stores received variables
 
 def BuildMessage():
     # Iterates through entire message length
@@ -66,7 +67,7 @@ def BuildMessage():
 
         # Builds first byte
         if i == 0:
-            data |= RW_CMD  & BYTE_MASK              # Validation check bit
+            data |= RW_CMD  & BYTE_MASK             # Validation check bit
             data |= RW_MASK & (BYTE_MASK * CmdType) # Command type bit
             data |= CmdSize & TRANSFER_SIZE_MASK    # Transfer size bits
         # Builds second byte
@@ -84,16 +85,19 @@ def SendMessage():
     for i in range(CMD_INFO_SIZE + CmdSize):
         ser.write(serial.to_bytes([OutCmdBuffer[i] & BYTE_MASK]))                  # Writes current message buffer position to the serial device
         debug("{1:02d} - {0:08b}".format(OutCmdBuffer[i], i))
-        time.sleep(Delay)
+        time.sleep(SerDelay)
+
+def ReadMessage():
+    # TODO Read message
 
 def GetRemoteVars():
     CmdType = READ
-    CmdSize = 0
+    CmdSize = 0     # TODO Requires actual data size
     for i in range(ID_AMOUNT):
         CmdAddr = i
         BuildMessage()
         SendMessage()
-        # TODO Read message
+        RemoteVars[i] = ReadMessage()
 
 # Main loop
 while True:

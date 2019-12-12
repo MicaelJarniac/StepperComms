@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/MicaelJarniac/StepperComms?style=flat-square)](LICENSE)
+[![GitHub license](https://img.shields.io/github/license/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/issues)
 
 # StepperComms

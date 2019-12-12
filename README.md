@@ -1,5 +1,6 @@
 [![GitHub license](https://img.shields.io/github/license/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/issues)
+![GitHub repo size](https://img.shields.io/github/repo-size/MicaelJarniac/StepperComms?style=flat-square)
 
 # StepperComms
 A Python script for communicating with the [LaunchPad Stepper][lpstepper], a [MSP-EXP430G2][launchpad] _LaunchPad_ firmware to control the [BOOST-DRV8711][stepperdriver] Stepper Motor _BoosterPack_ through a simplified UART protocol.

@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/MicaelJarniac/StepperComms?style=flat-square)](LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/MicaelJarniac/StepperComms?style=flat-square)](https://github.com/MicaelJarniac/StepperComms/issues)
 
 # StepperComms
@@ -19,9 +19,6 @@ Please email [micael@jarniac.com][mailmicael] for support.
 ## Credit
 Maintained by [Micael Jarniac][githubmicael].
 
-## License
-[MIT License][license]
-
 <!-- Description -->
 [lpstepper]: https://github.com/MicaelJarniac/LaunchPad-Stepper "MicaelJarniac/LaunchPad-Stepper"
 [launchpad]: http://ti.com/tool/MSP-EXP430G2 "MSP-EXP430G2 LaunchPad"
@@ -36,6 +33,3 @@ Maintained by [Micael Jarniac][githubmicael].
 
 <!-- Credit -->
 [githubmicael]: https://github.com/MicaelJarniac
-
-<!-- License -->
-[license]: LICENSE "MIT License"

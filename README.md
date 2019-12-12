@@ -14,8 +14,9 @@ Maintained by Micael Jarniac.
 [MIT License][license]
 
 <!-- Description -->
-[launchpad]: http://www.ti.com/tool/MSP-EXP430G2 "MSP-EXP430G2 LaunchPad"
-[stepperdriver]: http://www.ti.com/tool/BOOST-DRV8711 "BOOST-DRV8711 BoosterPack"
+[lpstepper]: https://github.com/MicaelJarniac/LaunchPad-Stepper "MicaelJarniac/LaunchPad-Stepper"
+[launchpad]: http://ti.com/tool/MSP-EXP430G2 "MSP-EXP430G2 LaunchPad"
+[stepperdriver]: http://ti.com/tool/BOOST-DRV8711 "BOOST-DRV8711 BoosterPack"
 
 <!-- Installation -->
 [py3]: https://python.org "Python.org"

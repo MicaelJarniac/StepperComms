@@ -16,6 +16,14 @@ Launch StepperComms.py with `python3 StepperComms.py`.
 ## Support
 Please email [micael@jarniac.com][mailmicael] for support.
 
+## Roadmap
+- [x] Basic communication
+- [x] Write commands
+- [ ] Read commands
+- [ ] Basic user interaction
+- [ ] TUI
+- [ ] GUI
+
 ## Credit
 Maintained by [Micael Jarniac][githubmicael].
 

@@ -3,7 +3,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/MicaelJarniac/StepperComms?style=flat-square)
 
 # StepperComms
-A Python script for communicating with the [LaunchPad Stepper][lpstepper], a [MSP-EXP430G2][launchpad] _LaunchPad_ firmware to control the [BOOST-DRV8711][stepperdriver] Stepper Motor _BoosterPack_ through a simplified UART protocol.
+A Python script for communicating with the [LaunchPad Stepper][lpstepper].
 
 ## Installation
 Launch StepperComms.py with `python3 StepperComms.py`.

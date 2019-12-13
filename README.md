@@ -26,7 +26,7 @@ Please email [micael@jarniac.com][mailmicael] for support.
 - [ ] GUI
 
 ## Credit
-Maintained by [Micael Jarniac][githubmicael].
+Created and maintained by [Micael Jarniac][githubmicael].
 
 <!-- Description -->
 [lpstepper]: https://github.com/MicaelJarniac/LaunchPad-Stepper "MicaelJarniac/LaunchPad-Stepper"

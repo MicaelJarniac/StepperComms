@@ -3,11 +3,13 @@ import os
 import sys
 import serial
 import time
-sys.path.append(os.path.dirname(os.path.expanduser('~/projects/Python-Playground/Debug')))  # Update path accordingly
-from Debug.Debug import Debug
+#sys.path.append(os.path.dirname(os.path.expanduser('~/projects/Python-Playground/Debug')))  # Update path accordingly
+#from Debug.Debug import Debug
 
 # Declare debug
-debug = Debug(True, 3).prt  # Simplifies debugging messages
+#debug = Debug(True, 3).prt  # Simplifies debugging messages
+def debug(text):
+    print(text)
 
 # Message building blocks
 RW_CMD              = 0x80  # Validation check
@@ -38,24 +40,24 @@ CmdAddr             = 0                         #         address
 CmdData             = [None] * CMD_DATA_SIZE    #         data
 
 # Serial configuration parameters
-SerPort             = "/dev/serial0"    # Device
+SerPort             = "COM4"    # Device
 SerBaud             = 9600              # Baud rate
 SerTout             = 1                 # Timeout
 SerDelay            = 0.05              # Delay between quick writes
 
 # Declare serial
 ser = serial.Serial(
-        port                = SerPort,              # Serial port       configurable above
-        baudrate            = SerBaud,              # Baudrate          configurable above
-        bytesize            = serial.EIGHTBITS,     # Byte size     hardcoded 8 bits
-        parity              = serial.PARITY_NONE,   # Parity        hardcoded no parity
-        stopbits            = serial.STOPBITS_TWO,  # Stop bits     hardcoded 2 stopbits
-        timeout             = SerTout,              # Timeout           configurable above
-        xonxoff             = False,                # ?             hardcoded false
-        rtscts              = False,                # ?             hardcoded false
-        dsrdtr              = False,                # ?             hardcoded false
-        write_timeout       = SerTout,              # Write timeout     configurable above
-        inter_byte_timeout  = None)                 # ?             hardcoded none
+    port                = SerPort,              # Serial port       configurable above
+    baudrate            = SerBaud,              # Baudrate          configurable above
+    bytesize            = serial.EIGHTBITS,     # Byte size     hardcoded 8 bits
+    parity              = serial.PARITY_NONE,   # Parity        hardcoded no parity
+    stopbits            = serial.STOPBITS_TWO,  # Stop bits     hardcoded 2 stopbits
+    timeout             = SerTout,              # Timeout           configurable above
+    xonxoff             = False,                # ?             hardcoded false
+    rtscts              = False,                # ?             hardcoded false
+    dsrdtr              = False,                # ?             hardcoded false
+    write_timeout       = SerTout,              # Write timeout     configurable above
+    inter_byte_timeout  = None)                 # ?             hardcoded none
 
 # Remote variables
 RemoteVars = [None] * ID_AMOUNT     # Stores received variables
@@ -88,6 +90,7 @@ def SendMessage():
         time.sleep(SerDelay)
 
 def ReadMessage():
+    print("TODO")
     # TODO Read message
 
 def GetRemoteVars():
